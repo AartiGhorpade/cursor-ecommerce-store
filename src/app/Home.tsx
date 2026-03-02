@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import type { Category, Product } from "@/lib/products";
@@ -16,7 +16,7 @@ const categoryFromSearch = (value: string | null): CategoryFilter => {
   return "all";
 };
 
-export default function Home() {
+function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { addToCart } = useStore();
@@ -244,3 +244,10 @@ export default function Home() {
   );
 }
 
+export default function Page() {
+  return (
+    <Suspense fallback={<div />}>
+      <Home />
+    </Suspense>
+  );
+}
